@@ -7,7 +7,7 @@ const Card = ({book}) => {
     <div className="max-w-sm my-7 rounded overflow-hidden shadow-lg" key={book._id}>
   <img className="w-full" src={book.imageUrl ?book.imageUrl: "https://thumbs.dreamstime.com/b/open-book-isolated-white-16094903.jpg"} alt="Sunset in the mountains"/>
   <div className="px-6 py-4">
-    <div className="font-bold text-xl mb-2">{book.bookName}</div>
+    <div className="font-bold text-2xl mb-2">{book.bookName}</div>
     <p className="text-green-700 text-base">
      Rs. {book.bookPrice}
     </p>

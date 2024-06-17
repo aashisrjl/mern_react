@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
-import { useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 
 const SingleBook = () => {
+  const navigator = useNavigate()
+
   const {id} = useParams()
   console.log(id)
   const [book,setBook] = useState([])
@@ -13,17 +15,20 @@ const SingleBook = () => {
     setBook(data.data)
     console.log(data.data)
   }
+  const handleDelete = async()=>{
+    await axios.delete(`http://localhost:3000/book/${id}`)
+    navigator('/');
+  }
 
   useEffect(()=>{
     fetchBooks()
-
   },[])
   return (
     <>
     <Navbar />
 
     <div className='mt-20 flex justify-center'>
-    <div className="max-w-sm my-7 rounded overflow-hidden shadow-lg" >
+    <div className="max-w-2xl my-7 rounded overflow-hidden shadow-lg" >
   <img className="w-full" src={book.imageUrl? book.imageUrl: "https://thumbs.dreamstime.com/b/open-book-isolated-white-16094903.jpg"} alt="Sunset in the mountains"/>
   <div className="px-6 py-4">
     <div className="font-bold text-xl mb-2">{book.bookName}</div>
@@ -40,6 +45,10 @@ const SingleBook = () => {
     <div className="font-bold text-md mb-1 text-center mt-2">-- {book.publication} Publication --</div>
 
   </div>
+  <button onClick={handleDelete} className='p-3 px-6 my-4 ml-3 bg-red-600 text-white rounded-lg shadow-lg ' > Delete</button>
+
+  <button className='p-3 px-6 my-4 ml-3 bg-blue-600 text-white rounded-lg shadow-lg ' ><Link to={`/book/edit/${id}`}>Edit</Link></button>
+
 </div>
     </div>
     </>
